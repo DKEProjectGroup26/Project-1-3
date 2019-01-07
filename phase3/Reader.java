@@ -49,15 +49,4 @@ public class Reader {
         
         return new Graph(nNodes, edges);
     }
-    
-    public static void main(String[] args) throws IOException {
-        Graph graph = readGraph("phase3/graphs/block3_2018_graph01.txt");
-        
-        System.out.println(graph.nodes.size());
-        
-        System.out.println();
-        
-        for (Node node : graph.nodes)
-            System.out.println(node.neighbors.size());
-    }
 }
