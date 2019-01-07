@@ -10,9 +10,10 @@ javac $(find ./* | grep .java)
 cd ..
 jar cfm Group26.jar phase3/MANIFEST.txt $(find ./* | grep .class)
 
-# echo "running jar"
-java -jar Group26.jar
-
 # echo "deleting .class files"
 cd phase3
 rm $(find ./* | grep .class)
+
+# echo "running jar"
+cd ..
+java -jar Group26.jar
