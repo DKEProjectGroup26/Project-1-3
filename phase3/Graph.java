@@ -22,7 +22,27 @@ public class Graph {
         }
     }
     
-    public boolean connected(int node0, int node1) {
-        return nodes.get(node0).neighbors.contains(nodes.get(node1));
+    public Graph(ArrayList<Node> ns) {
+        // this constructor is used when splitting
+        nodes = ns;
+        
+        ArrayList<int[]> edges = new ArrayList<int[]>();
+        
+        for (Node node : nodes) {
+            midLoop: for (Node neighbor : node.neighbors) {
+                int node0 = node.index;
+                int node1 = neighbor.index;
+                
+                int[] edge = {Math.min(node0, node1), Math.max(node0, node1)};
+                
+                // check
+                for (int[] check : edges)
+                    if (check[0] == edge[0] && check[1] == edge[1]) continue midLoop;
+                
+                edges.add(edge);
+            }
+        }
+        
+        numberOfEdges = edges.size();
     }
 }
