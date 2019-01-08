@@ -3,8 +3,8 @@ package phase3;
 import java.io.IOException;
 
 // NOT FINISHED
-public class BrooksTheorem {
-    public static void brooksUpperBound(Runner runner, Graph graph) {
+public class BrooksTheorem implements Algorithm {
+    public void run(Runner runner, Graph graph) {
         int maxNeighbors = 0;
         
         for (Node node : graph.nodes) {

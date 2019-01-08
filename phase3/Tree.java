@@ -2,8 +2,8 @@ package phase3;
 
 import java.util.ArrayList;
 
-public class Tree {
-    public static void isTree(Runner runner, Graph graph) {
+public class Tree implements Algorithm {
+    public void run(Runner runner, Graph graph) {
         // only works on a split graph
         boolean result = subTree(graph.nodes.get(0), null, new ArrayList<Node>());
 
