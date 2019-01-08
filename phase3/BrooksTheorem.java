@@ -13,9 +13,9 @@ public class BrooksTheorem implements Algorithm {
             if (neighbors > maxNeighbors) maxNeighbors = neighbors;
         }
         
-        // do extra checks to see if delta or delta + 1 is the actual bound
-        // for now assume delta + 1
-        
+        // delta + 1 is upper bound
         runner.upperBound(maxNeighbors + 1);
+        
+        // check if delta is upper bound
     }
 }
