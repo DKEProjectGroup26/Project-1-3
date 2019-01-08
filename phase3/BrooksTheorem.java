@@ -16,6 +16,6 @@ public class BrooksTheorem implements Algorithm {
         // do extra checks to see if delta or delta + 1 is the actual bound
         // for now assume delta + 1
         
-        runner.upperBound(maxNeighbors);
+        runner.upperBound(maxNeighbors + 1);
     }
 }
