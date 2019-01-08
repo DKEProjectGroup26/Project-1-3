@@ -18,9 +18,8 @@ public class Runner {
     }
     
     private void run() {
-        // call all other classes
-        
         Algorithm algorithms[] = {
+            // algorithms will be run in this order (unless parallelized)
             new BrooksTheorem(),
             new Tree(),
             new Clique()
@@ -42,7 +41,7 @@ public class Runner {
         // stop all threads
     }
     
-    private void boundCheck() {
+    public void boundCheck() {
         if (currentLowerBound == currentUpperBound)
             chromaticNumberFound(currentLowerBound);
     }

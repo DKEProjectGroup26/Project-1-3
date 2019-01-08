@@ -54,18 +54,22 @@ public class Main {
 }
 
 class SuperRunner {
-    private final ArrayList<Graph> graphs;
-    private final ArrayList<Runner> runners;
+    final ArrayList<Graph> graphs;
+    final ArrayList<Runner> runners;
     
-    private int globalLowerBound = 1;
-    private int globalUpperBound;
+    public int globalLowerBound = 1;
+    public int globalUpperBound;
     
     public SuperRunner(ArrayList<Graph> graphs) {
         this.graphs = graphs;
         
+        // just in case
+        System.out.println("NEW BEST LOWER BOUND = 1");
+        
         runners = new ArrayList<Runner>();
         int maxUpperBound = 0;
         for (Graph graph : graphs) {
+            // calculates initial upper bound when initialized
             Runner runner = new Runner(this, graph);
             
             if (runner.currentUpperBound > maxUpperBound)
@@ -73,7 +77,13 @@ class SuperRunner {
             
             runners.add(runner);
         }
+        
         globalUpperBound = maxUpperBound;
+        
+        // just in case
+        System.out.println("NEW BEST UPPER BOUND = " + globalUpperBound);
+        
+        boundCheck();
     }
     
     private void boundCheck() {
@@ -86,14 +96,15 @@ class SuperRunner {
     public void lowerBoundFound(int newLowerBound) {
         if (newLowerBound < globalLowerBound) return;
         
-        int minLowerBound = newLowerBound;
-        for (Runner runner : runners) {
-            if (runner.currentLowerBound < minLowerBound)
-                minLowerBound = runner.currentLowerBound;
-        }
-        if (minLowerBound > globalLowerBound) {
-            System.out.println("NEW BEST LOWER BOUND = " + minLowerBound);
-            globalLowerBound = minLowerBound;
+        // a lower bound for any graph is a lower bound for the whole thing
+        int maxLowerBound = newLowerBound;
+        for (Runner runner : runners)
+            if (runner.currentLowerBound > maxLowerBound)
+                maxLowerBound = runner.currentLowerBound;
+        
+        if (maxLowerBound > globalLowerBound) {
+            System.out.println("NEW BEST LOWER BOUND = " + maxLowerBound);
+            globalLowerBound = maxLowerBound;
             
             boundCheck();
         }
@@ -102,16 +113,26 @@ class SuperRunner {
     public void upperBoundFound(int newUpperBound) {
         if (newUpperBound > globalUpperBound) return;
         
+        // only the largest upper bound of all is the actual upper bound
         int maxUpperBound = newUpperBound;
-        for (Runner runner : runners) {
+        for (Runner runner : runners)
             if (runner.currentUpperBound > maxUpperBound)
                 maxUpperBound = runner.currentUpperBound;
-        }
+        
         if (maxUpperBound < globalUpperBound) {
             System.out.println("NEW BEST UPPER BOUND = " + maxUpperBound);
             globalUpperBound = maxUpperBound;
             
             boundCheck();
+        }
+    }
+    
+    public void imposeLowerBound() {
+        for (Runner runner : runners) {
+            if (runner.currentLowerBound < globalLowerBound) {
+                runner.currentLowerBound = globalLowerBound;
+                runner.boundCheck();
+            }
         }
     }
 }
