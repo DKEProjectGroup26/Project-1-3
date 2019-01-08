@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph06.txt");
+        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph03.txt");
         Runner runner = new Runner(graph);
     }
 }
@@ -24,6 +24,10 @@ class Runner {
     }
     
     private void run() {
+        // call all other classes
+        // make this threads
+        
+        BrooksTheorem.brooksUpperBound(this, graph);
         Tree.isTree(this, graph);
         Clique.findCliques(this, graph);
     }
