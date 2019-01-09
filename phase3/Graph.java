@@ -34,8 +34,6 @@ public class Graph {
         // stores the nodes for which all edges have been counted
         
         for (int i = 0; i < nodes.size(); i++) {
-            System.out.println(i + " / " + nodes.size());
-            
             for (Node neighbor : nodes.get(i).neighbors)
                 // if neigbor.index < i, it's already been counted
                 if (neighbor.index > i) nEdges++;
