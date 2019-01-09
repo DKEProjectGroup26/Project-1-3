@@ -13,11 +13,9 @@ public class Runner {
         this.parent = parent;
         this.graph = graph;
         currentUpperBound = graph.nodes.size();
-        
-        run();
     }
     
-    private void run() {
+    public void start() {
         Algorithm algorithms[] = {
             // algorithms will be run in this order (unless parallelized)
             new BrooksTheorem(),
@@ -32,6 +30,9 @@ public class Runner {
     }
     
     public void chromaticNumberFound(int chromaticNumber) {
+        currentLowerBound = chromaticNumber;
+        currentUpperBound = chromaticNumber;
+        
         if (chromaticNumber > currentLowerBound)
             parent.lowerBoundFound(chromaticNumber);
         
@@ -47,12 +48,16 @@ public class Runner {
     }
     
     public void lowerBound(int newLowerBound) {
-        if (newLowerBound > currentLowerBound)
+        if (newLowerBound > currentLowerBound) {
+            currentLowerBound = newLowerBound;
             parent.lowerBoundFound(newLowerBound);
+        }
     }
         
     public void upperBound(int newUpperBound) {
-        if (newUpperBound < currentUpperBound)
+        if (newUpperBound < currentUpperBound) {
+            currentUpperBound = newUpperBound;
             parent.upperBoundFound(newUpperBound);
+        }
     }
 }

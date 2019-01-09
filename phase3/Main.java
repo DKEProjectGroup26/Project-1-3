@@ -91,27 +91,28 @@ class SuperRunner {
     public SuperRunner(ArrayList<Graph> graphs) {
         this.graphs = graphs;
         
-        // just in case
+        // just in case nothing better is found
         System.out.println("NEW BEST LOWER BOUND = 1");
         
         runners = new ArrayList<Runner>();
         int maxUpperBound = 0;
         for (Graph graph : graphs) {
-            // calculates initial upper bound when initialized
+            if (graph.nodes.size() > maxUpperBound)
+                maxUpperBound = graph.nodes.size();
+            
             Runner runner = new Runner(this, graph);
-            
-            if (runner.currentUpperBound > maxUpperBound)
-                maxUpperBound = runner.currentUpperBound;
-            
             runners.add(runner);
         }
         
         globalUpperBound = maxUpperBound;
         
-        // just in case
+        // just in case nothing better is found
         System.out.println("NEW BEST UPPER BOUND = " + globalUpperBound);
         
         boundCheck();
+        
+        // preparations complete, start runners
+        for (Runner runner : runners) runner.start();
     }
     
     private void boundCheck() {
@@ -122,7 +123,7 @@ class SuperRunner {
     }
     
     public void lowerBoundFound(int newLowerBound) {
-        if (newLowerBound < globalLowerBound) return;
+        if (newLowerBound <= globalLowerBound) return;
         
         // a lower bound for any graph is a lower bound for the whole thing
         int maxLowerBound = newLowerBound;
@@ -139,13 +140,17 @@ class SuperRunner {
     }
     
     public void upperBoundFound(int newUpperBound) {
-        if (newUpperBound > globalUpperBound) return;
+        if (newUpperBound >= globalUpperBound) return;
         
         // only the largest upper bound of all is the actual upper bound
         int maxUpperBound = newUpperBound;
-        for (Runner runner : runners)
-            if (runner.currentUpperBound > maxUpperBound)
+        for (Runner runner : runners) {
+            if (runner.currentUpperBound > maxUpperBound) {
                 maxUpperBound = runner.currentUpperBound;
+                
+                if (maxUpperBound >= globalUpperBound) return;
+            }
+        }
         
         if (maxUpperBound < globalUpperBound) {
             System.out.println("NEW BEST UPPER BOUND = " + maxUpperBound);
