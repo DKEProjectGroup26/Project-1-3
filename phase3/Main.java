@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph05.txt");
+        Graph graph = Reader.readGraph("phase3/graphs_phase1/graph12.txt");
         
         // split graph into constituent graphs
         ArrayList<Graph> graphs = split(graph);
@@ -25,7 +25,6 @@ public class Main {
         
         while (graph.nodes.size() > 0) {
             ArrayList<Node> section = splitOff(graph);
-            System.out.println("section with " + section.size() + " nodes");
             
             if (firstIteration) {
                 firstIteration = false;
