@@ -26,23 +26,21 @@ public class Graph {
         // this constructor is used when splitting
         nodes = ns;
         
-        ArrayList<int[]> edges = new ArrayList<int[]>();
+        // reset indices
+        for (int i = 0; i < nodes.size(); i++)
+            nodes.get(i).index = i;
         
-        for (Node node : nodes) {
-            midLoop: for (Node neighbor : node.neighbors) {
-                int node0 = node.index;
-                int node1 = neighbor.index;
-                
-                int[] edge = {Math.min(node0, node1), Math.max(node0, node1)};
-                
-                // check
-                for (int[] check : edges)
-                    if (check[0] == edge[0] && check[1] == edge[1]) continue midLoop;
-                
-                edges.add(edge);
-            }
+        int nEdges = 0;
+        // stores the nodes for which all edges have been counted
+        
+        for (int i = 0; i < nodes.size(); i++) {
+            System.out.println(i + " / " + nodes.size());
+            
+            for (Node neighbor : nodes.get(i).neighbors)
+                // if neigbor.index < i, it's already been counted
+                if (neighbor.index > i) nEdges++;
         }
         
-        numberOfEdges = edges.size();
+        numberOfEdges = nEdges;
     }
 }

@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph06.txt");
+        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph05.txt");
         
         // split graph into constituent graphs
         ArrayList<Graph> graphs = split(graph);
@@ -21,29 +21,75 @@ public class Main {
     private static ArrayList<Graph> split(Graph graph) {
         ArrayList<Graph> sections = new ArrayList<Graph>();
         
+        boolean firstIteration = true;
+        
         while (graph.nodes.size() > 0) {
-            Graph section = splitOff(graph);
+            ArrayList<Node> section = splitOff(graph);
+            
+            if (firstIteration) {
+                firstIteration = false;
+                
+                if (section.size() == graph.nodes.size()) {
+                    // the first section is the whole graph
+                    
+                    sections.add(graph);
+                    return sections;
+                }
+            }
             
             // remove removed nodes from original graph
-            for (Node node : section.nodes) graph.nodes.remove(node);
+            for (Node node : section) graph.nodes.remove(node);
             
-            sections.add(section);
+            sections.add(new Graph(section));
         }
         
         return sections;
     }
     
-    private static Graph splitOff(Graph graph) {
+    // this is about the same speed as depth-first (they both work correctly)
+    // breadth-first
+    // private static ArrayList<Node> splitOff(Graph graph) {
+    //     ArrayList<Node> nodes = new ArrayList<Node>();
+    //     ArrayList<Node> holding = new ArrayList<Node>();
+    //
+    //     nodes.add(graph.nodes.get(0));
+    //     while (true) {
+    //         // add all nodes's nodes' neighbors to holding
+    //         for (Node node : nodes)
+    //             for (Node neighbor : node.neighbors)
+    //                 if (!nodes.contains(neighbor) && !holding.contains(neighbor))
+    //                     holding.add(neighbor);
+    //
+    //         if (holding.size() == 0) {
+    //             System.out.println("returning");
+    //             return nodes;
+    //         }
+    //         System.out.println("holding full: " + holding.size());
+    //
+    //         for (Node held : holding)
+    //             nodes.add(held);
+    //
+    //         System.out.println("added");
+    //
+    //         System.out.println(nodes.size() + " nodes");
+    //
+    //         holding.clear();
+    //         // holding = new ArrayList<Node>(); // might be faster
+    //     }
+    // }
+    
+    // depth-first
+    private static ArrayList<Node> splitOff(Graph graph) {
         ArrayList<Node> nodes = new ArrayList<Node>();
         Node node = graph.nodes.get(0);
         nodes.add(node);
-        
+
         // changes the nodes ArrayList
         splitOff(node, nodes);
-        
-        return new Graph(nodes);
+
+        return nodes;
     }
-    
+
     private static void splitOff(Node node, ArrayList<Node> nodes) {
         for (Node neighbor : node.neighbors) {
             if (nodes.contains(neighbor)) continue;
