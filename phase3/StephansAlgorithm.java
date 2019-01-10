@@ -1,27 +1,29 @@
 package phase3;
 
+import java.util.ArrayList;
+
 public class StephansAlgorithm implements Algorithm {
     public void run(Runner runner, Graph graph) {
-        int upperbound;
-        int currentMax = 0;
-        for (int i=0; i<graph.nodes.size(); i++) {
-            tryColor(graph.nodes.get(i));
-            if (graph.nodes.get(i).index > currentMax) {
-                currentMax = graph.nodes.get(i).index;
-            }
+        int[] colors = new int[graph.nodes.size()];
+        for (int i = 0; i < colors.length; i++) colors[i] = -1;
+        
+        int maxColor = 0; // = runner.currentLowerBound;
+        
+        for (int i = 0; i < colors.length; i++) {
+            Node node = graph.nodes.get(i);
+            
+            ArrayList<Integer> neighborColors = new ArrayList<Integer>();
+            for (Node neighbor : node.neighbors)
+                neighborColors.add(colors[neighbor.index]);
+            
+            // skip all colors taken by neighbors
+            int newColor = 1;
+            for (; neighborColors.contains(newColor); newColor++);
+            
+            colors[node.index] = newColor;
+            if (newColor > maxColor) maxColor = newColor;
         }
-        upperbound = currentMax;
-        runner.upperBound(upperbound);
-    }
-
-    public int tryColor(Node node) {
-        int nodeValue = 1;
-        for (int i = 0; i<node.neighbors.size(); i++) {
-            if (node.neighbors.get(i).index == nodeValue) {
-                nodeValue++;
-            }
-        }
-        node.index = nodeValue;
-        return node.index;
+        
+        runner.upperBound(maxColor);
     }
 }

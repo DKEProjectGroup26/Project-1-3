@@ -18,15 +18,21 @@ public class Runner {
     public void start() {
         Algorithm algorithms[] = {
             // algorithms will be run in this order (unless parallelized)
-            // new BrooksTheorem(),
-            // new Tree(),
-            // new Clique()
-            // new StephansAlgorithm()
+            new BrooksTheorem(),
+            new Tree(),
+            new Clique(),
+            new StephansAlgorithm()
         };
         
+        Runner self = this;
+        
         for (Algorithm algorithm : algorithms) {
-            // make a thread
-            algorithm.run(this, graph);
+            // improve this and implement timeout
+            new Thread() {
+                public void run() {
+                    algorithm.run(self, graph);
+                }
+            }.start();
         }
     }
     

@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph09.txt");
+        Graph graph = Reader.readGraph("phase3/graphs/graph20.txt");
         
         // split graph into constituent graphs
         ArrayList<Graph> graphs = split(graph);
@@ -28,17 +28,16 @@ public class Main {
             
             if (firstIteration) {
                 firstIteration = false;
-                
-                if (section.size() == graph.nodes.size()) {
+
+                if (graph.nodes.isEmpty()) {
                     // the first section is the whole graph
+                    graph.nodes = section;
                     
                     sections.add(graph);
+                    
                     return sections;
                 }
             }
-            
-            // remove removed nodes from original graph
-            for (Node node : section) graph.nodes.remove(node);
             
             sections.add(new Graph(section));
         }
@@ -60,21 +59,30 @@ public class Main {
                     if (graph.nodes.remove(neighbor)) {
                         holding.add(neighbor);
                         
-                        if (graph.nodes.isEmpty()) {
-                            // no nodes left, early finish
-                            for (Node held : holding) nodes.add(held);
-                            return nodes;
-                        }
+                        // check safety later
+                        // if (graph.nodes.isEmpty()) {
+                        //     // no nodes left, early finish
+                        //     for (Node held : holding) nodes.add(held);
+                        //
+                        //     System.out.println("return 0");
+                        //     System.out.println(holding.size());
+                        //     System.out.println(nodes.size());
+                        //     return nodes;
+                        // }
                     }
                 }
             }
             
-            if (holding.isEmpty()) return nodes;
+            if (holding.isEmpty()) {
+                return nodes;
+            }
             
             for (Node held : holding) nodes.add(held);
 
             // if no nodes left, no point in doing another loop
-            if (graph.nodes.isEmpty()) return nodes;
+            if (graph.nodes.isEmpty()) {
+                return nodes;
+            }
             
             holding.clear();
         }

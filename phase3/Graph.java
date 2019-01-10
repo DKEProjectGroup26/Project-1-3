@@ -3,7 +3,7 @@ package phase3;
 import java.util.ArrayList;
 
 public class Graph {
-    final ArrayList<Node> nodes;
+    ArrayList<Node> nodes;
     final int numberOfEdges;
     
     public Graph(int nNodes, ArrayList<int[]> edges) {
