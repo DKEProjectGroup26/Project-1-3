@@ -1,0 +1,26 @@
+public class StephansAlgorithm {
+
+    public void run(Runner runner, Graph graph) {
+        int upperbound;
+        int currentMax;
+        for (int i=0; i<graph.nodes.size(); i++) {
+            tryColor(graph.nodes.get(i));
+            if (graph.nodes.get(i).value > currentMax) {
+                currentMax = graph.nodes.get(i).value;
+            }
+        }
+        upperbound = currentMax;
+        runner.upperBound(upperbound);
+    }
+
+    public int tryColor(Node node) {
+        int nodeValue = 1;
+        for (int i = 0; i<node.neighbors.size(); i++) {
+            if (node.neighbors.get(i).value == nodeValue) {
+                nodeValue++;
+            }
+        }
+        node.value = nodeValue;
+        return node.value;
+    }
+}
