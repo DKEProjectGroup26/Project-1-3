@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs/graph20.txt");
+        Graph graph = Reader.readGraph("phase3/graphs_phase1/graph06.txt");
         
         // split graph into constituent graphs
         ArrayList<Graph> graphs = split(graph);
