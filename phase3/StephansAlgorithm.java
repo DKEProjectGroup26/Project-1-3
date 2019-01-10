@@ -18,7 +18,7 @@ public class StephansAlgorithm implements Algorithm {
             
             // skip all colors taken by neighbors
             int newColor = 1;
-            for (; neighborColors.contains(newColor); newColor++);
+            while (neighborColors.contains(newColor)) newColor++;
             
             colors[node.index] = newColor;
             if (newColor > maxColor) maxColor = newColor;
