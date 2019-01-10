@@ -33,7 +33,7 @@ public class AdjacencyMatrix implements Algorithm {
         }
         
         // i controls the columns and j controls the rows
-		for (int i = 0; i < n; i++){
+		for (int i = 0; i < n; i++) {
 			//matrix[i][i] is the colour that the vertex i can choose and firstly initialize it as 1
 			matrix[i][i] = 1;
 			
@@ -54,7 +54,7 @@ public class AdjacencyMatrix implements Algorithm {
             //This step is to ensure the program go into the "if" only if there's 0 in
             // the rows, since if there's no 0, a will be -1
             if (a >= 0) {
-                if(a < i)
+                if (a < i)
 					matrix[i][i] = a + 1;
 					// When there's no other 0 in the lower diagnal of that row,
                     // then the color of vertax i should be a new color

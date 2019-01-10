@@ -3,6 +3,7 @@ package phase3;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// TODO: pass the whole graph to AdjacencyMatrix instead of split graphs
 public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
