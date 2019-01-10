@@ -1,12 +1,13 @@
-public class StephansAlgorithm {
+package phase3;
 
+public class StephansAlgorithm implements Algorithm {
     public void run(Runner runner, Graph graph) {
         int upperbound;
-        int currentMax;
+        int currentMax = 0;
         for (int i=0; i<graph.nodes.size(); i++) {
             tryColor(graph.nodes.get(i));
-            if (graph.nodes.get(i).value > currentMax) {
-                currentMax = graph.nodes.get(i).value;
+            if (graph.nodes.get(i).index > currentMax) {
+                currentMax = graph.nodes.get(i).index;
             }
         }
         upperbound = currentMax;
@@ -16,11 +17,11 @@ public class StephansAlgorithm {
     public int tryColor(Node node) {
         int nodeValue = 1;
         for (int i = 0; i<node.neighbors.size(); i++) {
-            if (node.neighbors.get(i).value == nodeValue) {
+            if (node.neighbors.get(i).index == nodeValue) {
                 nodeValue++;
             }
         }
-        node.value = nodeValue;
-        return node.value;
+        node.index = nodeValue;
+        return node.index;
     }
 }

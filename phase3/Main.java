@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs_phase1/graph12.txt");
+        Graph graph = Reader.readGraph("phase3/graphs/block3_2018_graph09.txt");
         
         // split graph into constituent graphs
         ArrayList<Graph> graphs = split(graph);
@@ -134,6 +134,12 @@ class SuperRunner {
         if (maxLowerBound > globalLowerBound) {
             System.out.println("NEW BEST LOWER BOUND = " + maxLowerBound);
             globalLowerBound = maxLowerBound;
+            
+            // set each runner's lower bound to the new global lower bound
+            for (Runner runner : runners) {
+                runner.currentLowerBound = globalLowerBound;
+                runner.boundCheck();
+            }
             
             boundCheck();
         }

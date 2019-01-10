@@ -18,9 +18,10 @@ public class Runner {
     public void start() {
         Algorithm algorithms[] = {
             // algorithms will be run in this order (unless parallelized)
-            new BrooksTheorem(),
-            new Tree(),
-            new Clique()
+            // new BrooksTheorem(),
+            // new Tree(),
+            // new Clique()
+            // new StephansAlgorithm()
         };
         
         for (Algorithm algorithm : algorithms) {
