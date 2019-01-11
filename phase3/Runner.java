@@ -20,12 +20,13 @@ public class Runner {
             // new BrooksTheorem(),
             // new Tree(),
             // new Clique(),
-            // new StephansAlgorithm()
+            // new StephansAlgorithm(),
             new AdjacencyMatrix()
         };
         
         Runner self = this;
         
+        // threaded version
         for (Algorithm algorithm : algorithms) {
             // improve this and implement timeout
             new Thread() {
@@ -34,6 +35,11 @@ public class Runner {
                 }
             }.start();
         }
+        
+        // unthreaded version
+        // for (Algorithm algorithm : algorithms) {
+        //     algorithm.run(self, graph);
+        // }
     }
     
     public void chromaticNumberFound(int chromaticNumber) {
