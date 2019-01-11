@@ -2,7 +2,6 @@ package phase3;
 
 import java.util.ArrayList;
 
-// CURRENTLY BROKEN
 public class Clique implements Algorithm {
     public void run(Runner runner, Graph graph) {
         // start from lower bound, no point checking below
@@ -83,6 +82,7 @@ public class Clique implements Algorithm {
     }
     
     private static ArrayList<Node> findClique(int size, ArrayList<Node> clique, ArrayList<Node> candidates) {
+        mainLoop:
         for (Node node : candidates) {
             ArrayList<Node> newClique = new ArrayList<Node>(clique);
             newClique.add(node);
@@ -94,10 +94,14 @@ public class Clique implements Algorithm {
                 if (!node.neighbors.contains(candidate)) {
                     newCandidates.remove(candidate);
                     
-                    if (newClique.size() + newCandidates.size() < size)
-                        return null;
+                    // if there aren't enough candidates left to make a clique
+                    // of the given size, stop checking
+                    // if (newClique.size() + newCandidates.size() < size)
+                        // continue mainLoop;
                 }
             }
+            
+            if (newClique.size() + newCandidates.size() < size) continue;
             
             // now newCandidates only contains the still viable nodes
             ArrayList<Node> result = findClique(size, newClique, newCandidates);

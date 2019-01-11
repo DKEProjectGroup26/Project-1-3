@@ -19,9 +19,9 @@ public class Runner {
         Algorithm algorithms[] = {
             // new BrooksTheorem(),
             // new Tree(),
-            // new Clique(),
+            new Clique(),
             // new StephansAlgorithm(),
-            new AdjacencyMatrix()
+            // new AdjacencyMatrix()
         };
         
         Runner self = this;
