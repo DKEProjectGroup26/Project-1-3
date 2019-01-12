@@ -41,4 +41,23 @@ public class Graph {
         
         numberOfEdges = nEdges;
     }
+    
+    public Graph(Graph graph) {
+        // deep clone constructor
+        ArrayList<Node> newNodes = new ArrayList<Node>();
+        
+        for (Node node : graph.nodes)
+            newNodes.add(new Node(node.index));
+        
+        // recreate neighbors
+        for (Node node : graph.nodes) {
+            Node newNode = newNodes.get(node.index);
+            
+            for (Node neighbor : node.neighbors)
+                newNode.neighbors.add(newNodes.get(neighbor.index));
+        }
+        
+        nodes = newNodes;
+        numberOfEdges = graph.numberOfEdges;
+    }
 }

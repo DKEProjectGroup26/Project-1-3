@@ -2,7 +2,7 @@ package phase3;
 
 import java.util.ArrayList;
 
-public class StephansAlgorithm implements Algorithm {
+public class StephansAlgorithm implements Algorithm.Connected {
     public void run(Runner runner, Graph graph) {
         int[] colors = new int[graph.nodes.size()];
         for (int i = 0; i < colors.length; i++) colors[i] = -1;

@@ -3,30 +3,24 @@ package phase3;
 import java.util.ArrayList;
 
 public class Runner {
-    private final SuperRunner parent;
+    // protected to make it accessible to extending class OGRunner
+    protected final SuperRunner parent;
     private final Graph graph;
+    private final ArrayList<Algorithm> algorithms;
     
     public int currentLowerBound = 1;
     public int currentUpperBound;
     
-    public Runner(SuperRunner parent, Graph graph) {
+    public Runner(SuperRunner parent, Graph graph, ArrayList<Algorithm> algorithms) {
         this.parent = parent;
         this.graph = graph;
+        this.algorithms = algorithms;
         currentUpperBound = graph.nodes.size();
     }
     
     public void start() {
-        Algorithm algorithms[] = {
-            // new BrooksTheorem(),
-            // new Tree(),
-            new Clique(),
-            // new StephansAlgorithm(),
-            // new AdjacencyMatrix()
-        };
-        
-        Runner self = this;
-        
         // threaded version
+        Runner self = this;
         for (Algorithm algorithm : algorithms) {
             // improve this and implement timeout
             new Thread() {

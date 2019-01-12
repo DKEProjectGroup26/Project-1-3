@@ -2,7 +2,7 @@ package phase3;
 
 import java.util.ArrayList;
 
-public class Clique implements Algorithm {
+public class Clique implements Algorithm.Connected {
     public void run(Runner runner, Graph graph) {
         // start from lower bound, no point checking below
         int startSize = Math.max(2, runner.currentLowerBound);
