@@ -6,24 +6,8 @@ public class Splitter {
     public static ArrayList<Graph> split(Graph graph) {
         ArrayList<Graph> sections = new ArrayList<Graph>();
         
-        boolean firstIteration = true;
-        
         while (graph.nodes.size() > 0) {
             ArrayList<Node> section = splitOff(graph);
-            
-            if (firstIteration) {
-                firstIteration = false;
-
-                if (graph.nodes.isEmpty()) {
-                    // the first section is the whole graph
-                    graph.nodes = section;
-                    
-                    sections.add(graph);
-                    
-                    return sections;
-                }
-            }
-            
             sections.add(new Graph(section));
         }
         
@@ -44,7 +28,7 @@ public class Splitter {
                     if (graph.nodes.remove(neighbor)) {
                         holding.add(neighbor);
                         
-                        // check safety later
+                        // check safety later (probably unsafe)
                         // if (graph.nodes.isEmpty()) {
                         //     // no nodes left, early finish
                         //     for (Node held : holding) nodes.add(held);

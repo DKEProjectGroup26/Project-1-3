@@ -11,13 +11,18 @@ public class OGRunner extends Runner {
         super(parent, graph, algorithms);
     }
     
-    // the only change in functionality is the upperBound method
-    // which, in this case, imposes its upper bound on all other runners
+    // the upperBound method imposes its upper bound on all other runners
     @Override
     public void upperBound(int newUpperBound) {
         if (newUpperBound < currentUpperBound) {
             currentUpperBound = newUpperBound;
             parent.ogUpperBoundFound(newUpperBound);
         }
+    }
+    
+    // the chromaticNumberFound method stops execution
+    @Override
+    public void chromaticNumberFound(int chromaticNumber) {
+        parent.ogChromaticNumberFound(chromaticNumber);
     }
 }

@@ -8,8 +8,9 @@ public class Runner {
     private final Graph graph;
     private final ArrayList<Algorithm> algorithms;
     
-    public int currentLowerBound = 1;
-    public int currentUpperBound;
+    // volatile for the same reason as in SuperRunner
+    public volatile int currentLowerBound = 1;
+    public volatile int currentUpperBound;
     
     public Runner(SuperRunner parent, Graph graph, ArrayList<Algorithm> algorithms) {
         this.parent = parent;
@@ -32,19 +33,22 @@ public class Runner {
         
         // unthreaded version
         // for (Algorithm algorithm : algorithms) {
-        //     algorithm.run(self, graph);
+        //     algorithm.run(this, graph);
         // }
     }
     
     public void chromaticNumberFound(int chromaticNumber) {
-        currentLowerBound = chromaticNumber;
-        currentUpperBound = chromaticNumber;
+        // currentLowerBound = chromaticNumber;
+        // currentUpperBound = chromaticNumber;
+        //
+        // if (chromaticNumber > currentLowerBound)
+        //     parent.lowerBoundFound(chromaticNumber);
+        //
+        // if (chromaticNumber < currentUpperBound)
+        //     parent.upperBoundFound(chromaticNumber);
         
-        if (chromaticNumber > currentLowerBound)
-            parent.lowerBoundFound(chromaticNumber);
-        
-        if (chromaticNumber < currentUpperBound)
-            parent.upperBoundFound(chromaticNumber);
+        lowerBound(chromaticNumber);
+        upperBound(chromaticNumber);
         
         // stop all threads
     }

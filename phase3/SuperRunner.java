@@ -1,6 +1,7 @@
 package phase3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SuperRunner {
     final Graph originalGraph;
@@ -19,17 +20,21 @@ public class SuperRunner {
         originalGraph = new Graph(inputGraph);
         graphs = Splitter.split(inputGraph);
         
+        // this is just for safety, if a graph's nodes are not in order, it will throw an error
+        originalGraph.checkNumbering();
+        for (Graph graph : graphs) graph.checkNumbering();
+        
         Algorithm[] algorithms = {
             new BrooksTheorem(),
             new Tree(),
             new Clique(),
             new StephansAlgorithm(),
             new AdjacencyMatrix(),
+            new BasicExact()
             
-            // these are work in progress, don't use
+            // these are work in progress, don't use them
             // new Exact1(),
             // new HoffmanBound(),
-            // new BasicExact()
         };
         
         // divide algorithms into the ones taking only connected graphs and the ones taking any graph
@@ -54,16 +59,29 @@ public class SuperRunner {
         globalUpperBound = maxNumberOfNodes;
         System.out.println("NEW BEST UPPER BOUND = " + globalUpperBound);
         
-        // create runners
+        // initialize runners ArrayList
         runners = new ArrayList<Runner>();
         
-        // TODO: if there is only one section in the graph, make an OGRunner with all algorithms
-        // generate runners with connected graph algorithms
-        for (Graph graph : graphs)
-            runners.add(new Runner(this, graph, connectedAlgorithms));
-        
-        // generate the single runner with any graph algorithms
-        originalGraphRunner = new OGRunner(this, originalGraph, anyAlgorithms);
+        if (graphs.size() == 1) {
+            // if there is only one section in the graph,
+            // it's connected and all algorithms can operate on it
+            
+            // convert algorithms array to ArrayList
+            ArrayList<Algorithm> allAlgorithms = new ArrayList<Algorithm>(Arrays.asList(algorithms));
+            
+            // create the runner
+            originalGraphRunner = new OGRunner(this, originalGraph, allAlgorithms);
+        } else {
+            // otherwise, only Algorithm.Any algorithms can operate on the whole graph
+            // and the other algorithms will operate on section of it
+            
+            // create runners with Algorithm.Connected algorithms
+            for (Graph graph : graphs)
+                runners.add(new Runner(this, graph, connectedAlgorithms));
+            
+            // create the original graph runner with Algorithm.Any algorithms only
+            originalGraphRunner = new OGRunner(this, originalGraph, anyAlgorithms);
+        }
         
         boundCheck();
         
@@ -73,10 +91,8 @@ public class SuperRunner {
     }
     
     private void boundCheck() {
-        if (globalUpperBound == globalLowerBound) {
-            System.out.println("CHROMATIC NUMBER = " + globalLowerBound);
-            System.exit(0);
-        }
+        if (globalLowerBound == globalUpperBound)
+            chromaticNumberFound(globalLowerBound);
     }
     
     public void lowerBoundFound(int newLowerBound) {
@@ -149,5 +165,17 @@ public class SuperRunner {
                 runner.boundCheck();
             }
         }
+    }
+    
+    private void chromaticNumberFound(int chromaticNumber) {
+        // forward method
+        ogChromaticNumberFound(chromaticNumber);
+    }
+    
+    public void ogChromaticNumberFound(int chromaticNumber) {
+        // this method is only called by OGRunner
+        
+        System.out.println("CHROMATIC NUMBER = " + chromaticNumber);
+        System.exit(0);
     }
 }
