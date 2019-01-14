@@ -6,16 +6,37 @@ public class Runner {
     // protected to make it accessible to extending class OGRunner
     protected final SuperRunner parent;
     private final Graph graph;
-    private final ArrayList<Algorithm> algorithms;
+    //private 
+    final ArrayList<Algorithm> algorithms;
     
     // volatile for the same reason as in SuperRunner
-    public volatile int currentLowerBound = 1;
-    public volatile int currentUpperBound;
+    protected volatile int currentLowerBound = 1;
+    protected volatile int currentUpperBound;
     
-    public Runner(SuperRunner parent, Graph graph, ArrayList<Algorithm> algorithms) {
+    public int getLowerBound() {
+        return currentLowerBound;
+    }
+    
+    public int getUpperBound() {
+        return currentUpperBound;
+    }
+    
+    public Runner (SuperRunner parent, Graph graph, ArrayList<Class<? extends Algorithm>> algorithmClasses) {
         this.parent = parent;
         this.graph = graph;
-        this.algorithms = algorithms;
+        algorithms = new ArrayList<Algorithm>();
+        
+        for (Class<? extends Algorithm> algorithmClass : algorithmClasses) {
+            try {
+                algorithms.add(algorithmClass.getConstructor().newInstance());
+            } catch (InstantiationException e) {
+                throw new Error("class " + algorithmClass.getSimpleName() + " can't be instantiated");
+            } catch (Exception e) {
+                // for all other exceptions
+                throw new RuntimeException(e);
+            }
+        }
+        
         currentUpperBound = graph.nodes.size();
     }
     
@@ -37,20 +58,18 @@ public class Runner {
         // }
     }
     
+    public void interruptAll() {
+        // interrupt all interruptable algorithms
+        for (Algorithm algorithm : algorithms)
+            if (algorithm instanceof Interruptable)
+                ((Interruptable) algorithm).interrupt();
+    }
+    
     public void chromaticNumberFound(int chromaticNumber) {
-        // currentLowerBound = chromaticNumber;
-        // currentUpperBound = chromaticNumber;
-        //
-        // if (chromaticNumber > currentLowerBound)
-        //     parent.lowerBoundFound(chromaticNumber);
-        //
-        // if (chromaticNumber < currentUpperBound)
-        //     parent.upperBoundFound(chromaticNumber);
-        
         lowerBound(chromaticNumber);
         upperBound(chromaticNumber);
         
-        // stop all threads
+        interruptAll();
     }
     
     public void boundCheck() {
@@ -62,6 +81,13 @@ public class Runner {
         if (newLowerBound > currentLowerBound) {
             currentLowerBound = newLowerBound;
             parent.lowerBoundFound(newLowerBound);
+            
+            // send new lower bound message to all accepting algorithms
+            for (Algorithm algorithm : algorithms)
+                if (algorithm instanceof Interruptable.WithLowerBoundUpdates)
+                    ((Interruptable.WithLowerBoundUpdates) algorithm).newLowerBound(newLowerBound);
+            
+            boundCheck();
         }
     }
         
@@ -69,6 +95,13 @@ public class Runner {
         if (newUpperBound < currentUpperBound) {
             currentUpperBound = newUpperBound;
             parent.upperBoundFound(newUpperBound);
+            
+            // send new upper bound message to all accepting algorithms
+            for (Algorithm algorithm : algorithms)
+                if (algorithm instanceof Interruptable.WithUpperBoundUpdates)
+                    ((Interruptable.WithUpperBoundUpdates) algorithm).newUpperBound(newUpperBound);
+            
+            boundCheck();
         }
     }
 }

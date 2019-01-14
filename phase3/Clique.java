@@ -2,10 +2,24 @@ package phase3;
 
 import java.util.ArrayList;
 
-public class Clique implements Algorithm.Connected {
+public class Clique implements Algorithm.Connected, Interruptable.WithLowerBoundUpdates {
+    private boolean running = true;
+    private int localLowerBound;
+    
+    public void interrupt() {
+        running = false;
+    }
+    
+    public void newLowerBound(int lowerBound) {
+        if (lowerBound > localLowerBound)
+            localLowerBound = lowerBound;
+    }
+    
     public void run(Runner runner, Graph graph) {
+        localLowerBound = runner.currentLowerBound;
+        
         // start from lower bound, no point checking below
-        int startSize = Math.max(2, runner.currentLowerBound);
+        int startSize = Math.max(2, localLowerBound + 1);
         
         // stores the nodes with enough connections for the last size
         // start with all the nodes, select in loop
@@ -15,6 +29,9 @@ public class Clique implements Algorithm.Connected {
         ArrayList<Node> clique = new ArrayList<Node>();
         
         for (int size = startSize;; size++) {
+            // check if the lower bound has changed, if so, skip to match
+            if (localLowerBound >= size) size = localLowerBound + 1;
+            
             // remove all candidates with not enough connections
             candidates = selectViable(candidates, size);
             
@@ -28,6 +45,7 @@ public class Clique implements Algorithm.Connected {
             if (clique == null) break;
             
             // clique != null
+            if (size > localLowerBound) localLowerBound = size;
             runner.lowerBound(size); // clique found, set bound and continue searching
         }
     }
@@ -81,7 +99,10 @@ public class Clique implements Algorithm.Connected {
         return candidates;
     }
     
-    private static ArrayList<Node> findClique(int size, ArrayList<Node> clique, ArrayList<Node> candidates) {
+    private ArrayList<Node> findClique(int size, ArrayList<Node> clique, ArrayList<Node> candidates) {
+        // check if interrupted or if a better lower bound was found
+        if (!running || localLowerBound >= size) return null;
+        
         mainLoop:
         for (Node node : candidates) {
             ArrayList<Node> newClique = new ArrayList<Node>(clique);
