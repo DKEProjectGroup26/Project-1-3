@@ -13,7 +13,7 @@ public class Main {
         Graph graph = Reader.readGraph("phase3/graphs_phase1/graph02.txt");
         
         // prints out how many separate graphs there are
-        // System.out.println(graphs.size());
+        // System.out.println(graphs.size() + " section in graph");
         
         SuperRunner runner = new SuperRunner(graph);
     }
