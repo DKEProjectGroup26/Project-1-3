@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 // TODO: remember to check TODOs
-// TODO: implement a system to tell running algorithms to stop and/or update their bounds
-// this is so that exact algorithms don't keep checking below the current lower bound
 public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts

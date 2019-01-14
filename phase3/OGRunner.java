@@ -12,15 +12,24 @@ public class OGRunner extends Runner {
     }
     
     // the upperBound method imposes its upper bound on all other runners
+    // the method is the same except it calls parent.ogUpperBoundFound instead of parent.upperBoundFound
     @Override
     public void upperBound(int newUpperBound) {
         if (newUpperBound < currentUpperBound) {
             currentUpperBound = newUpperBound;
             parent.ogUpperBoundFound(newUpperBound);
+            
+            // send new upper bound message to all accepting algorithms
+            for (Algorithm algorithm : algorithms)
+                if (algorithm instanceof Interruptable.WithUpperBoundUpdates)
+                    ((Interruptable.WithUpperBoundUpdates) algorithm).newUpperBound(newUpperBound);
+            
+            boundCheck();
         }
     }
     
-    // the chromaticNumberFound method stops execution
+    // the chromaticNumberFound method stops the whole program
+    // if there's a chromatic number for the whole graph, that's it
     @Override
     public void chromaticNumberFound(int chromaticNumber) {
         parent.ogChromaticNumberFound(chromaticNumber);
