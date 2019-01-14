@@ -100,8 +100,8 @@ public class Clique implements Algorithm.Connected, Interruptable.WithLowerBound
     }
     
     private ArrayList<Node> findClique(int size, ArrayList<Node> clique, ArrayList<Node> candidates) {
-        // check if interrupted
-        if (!running) return null;
+        // check if interrupted or if a better lower bound was found
+        if (!running || localLowerBound >= size) return null;
         
         mainLoop:
         for (Node node : candidates) {

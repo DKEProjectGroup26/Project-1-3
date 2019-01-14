@@ -95,8 +95,8 @@ public class SuperRunner {
         // a lower bound for any graph is a lower bound for the whole thing
         int maxLowerBound = newLowerBound;
         for (Runner runner : runners)
-            if (runner.currentLowerBound > maxLowerBound)
-                maxLowerBound = runner.currentLowerBound;
+            if (runner.getLowerBound() > maxLowerBound)
+                maxLowerBound = runner.getLowerBound();
         
         if (maxLowerBound > globalLowerBound) {
             System.out.println("NEW BEST LOWER BOUND = " + maxLowerBound);
@@ -104,7 +104,8 @@ public class SuperRunner {
             
             // set each runner's lower bound to the new global lower bound
             for (Runner runner : runners) {
-                runner.currentLowerBound = globalLowerBound;
+                // runner.currentLowerBound = globalLowerBound;
+                runner.lowerBound(globalLowerBound);
                 runner.boundCheck();
             }
             
@@ -118,8 +119,8 @@ public class SuperRunner {
         // only the largest upper bound of all is the actual upper bound
         int maxUpperBound = newUpperBound;
         for (Runner runner : runners) {
-            if (runner.currentUpperBound > maxUpperBound) {
-                maxUpperBound = runner.currentUpperBound;
+            if (runner.getUpperBound() > maxUpperBound) {
+                maxUpperBound = runner.getUpperBound();
                 
                 if (maxUpperBound >= globalUpperBound) return;
             }
@@ -142,23 +143,15 @@ public class SuperRunner {
         imposeOGUpperBound();
     }
     
-    public void imposeLowerBound() {
-        for (Runner runner : runners) {
-            if (runner.currentLowerBound < globalLowerBound) {
-                runner.currentLowerBound = globalLowerBound;
-                runner.boundCheck();
-            }
-        }
+    private void imposeLowerBound() {
+        for (Runner runner : runners)
+            runner.lowerBound(globalLowerBound);
     }
     
-    public void imposeOGUpperBound() {
+    private void imposeOGUpperBound() {
         // this method is only called by ogUpperBoundFound
-        for (Runner runner : runners) {
-            if (runner.currentUpperBound > globalUpperBound) {
-                runner.currentUpperBound = globalUpperBound;
-                runner.boundCheck();
-            }
-        }
+        for (Runner runner : runners)
+            runner.upperBound(globalUpperBound);
     }
     
     private void chromaticNumberFound(int chromaticNumber) {

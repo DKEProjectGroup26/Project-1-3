@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
-        Graph graph = Reader.readGraph("phase3/graphs_phase1/graph01.txt");
+        Graph graph = Reader.readGraph("phase3/graphs_phase1/graph03.txt");
         
         // prints out how many separate graphs there are
         // System.out.println(graphs.size());
