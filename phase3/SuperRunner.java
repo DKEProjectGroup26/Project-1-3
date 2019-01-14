@@ -31,18 +31,14 @@ public class SuperRunner {
             = new ArrayList<Class<? extends Algorithm>>();
         
         for (Class<? extends Algorithm> algorithm : allAlgorithms) {
-            for (Class implemented : algorithm.getInterfaces()) {
-                // if interface extends Algorithm
-                if (implemented.getInterfaces()[0] == Algorithm.class) {
-                    if (implemented == Algorithm.Connected.class)
-                        connectedAlgorithms.add(algorithm);
-                    else if (implemented == Algorithm.Any.class)
-                        anyAlgorithms.add(algorithm);
-                    else throw new Error("invalid algorithm interface: " + algorithm.getSimpleName());
-                    
-                    break;
-                }
-            }
+            if (Algorithm.Connected.class.isAssignableFrom(algorithm))
+                connectedAlgorithms.add(algorithm);
+            else if (Algorithm.Any.class.isAssignableFrom(algorithm))
+                anyAlgorithms.add(algorithm);
+            else throw new Error(
+                "algorithm " + algorithm.getSimpleName()
+                + " doesn't implement either Algorithm.Connected or Algorithm.Any"
+            );
         }
         
         // print out very basic lower and upper bounds just in case
