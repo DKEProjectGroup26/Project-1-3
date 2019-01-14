@@ -42,16 +42,18 @@ public class BasicExact implements Algorithm.Connected, Interruptable.WithLowerB
         int[] colors = new int[graph.nodes.size()];
         Arrays.fill(colors, -1);
         
-        // TODO: assign 0 to first node and start at 1
-        // the index of the node currently being colored
-        int index = 0;
+        // set first node to color 0
+        colors[0] = 0;
+        
+        // the index of the node currently being colored, start from second node
+        int index = 1;
         
         while (true) {
             // check if interrupted of if a better lower bound was found
             if (!running || localLowerBound > numberOfColors) return false;
             
             // if the index is smaller than 0, the graph cannot be colored with this many colors
-            if (index < 0) return false;
+            if (index <= 0) return false;
             
             // if the index is outside the colors array, all nodes are colored
             if (index >= colors.length) return true;
