@@ -16,7 +16,7 @@ public class SuperRunner {
     public volatile int globalLowerBound = 1;
     public volatile int globalUpperBound;
     
-    public SuperRunner(Graph inputGraph) {
+    public SuperRunner(Graph inputGraph, ArrayList<Class<? extends Algorithm>> allAlgorithms) {
         originalGraph = new Graph(inputGraph);
         graphs = Splitter.split(inputGraph);
         
@@ -24,28 +24,25 @@ public class SuperRunner {
         originalGraph.checkNumbering();
         for (Graph graph : graphs) graph.checkNumbering();
         
-        Algorithm[] algorithms = {
-            new BrooksTheorem(),
-            new Tree(),
-            new Clique(),
-            new StephansAlgorithm(),
-            new AdjacencyMatrix(),
-            new BasicExact()
-            
-            // these are work in progress, don't use them
-            // new Exact1(),
-            // new HoffmanBound(),
-        };
-        
         // divide algorithms into the ones taking only connected graphs and the ones taking any graph
-        ArrayList<Algorithm> connectedAlgorithms = new ArrayList<Algorithm>();
-        ArrayList<Algorithm> anyAlgorithms = new ArrayList<Algorithm>();
-        for (Algorithm algorithm : algorithms) {
-            if (algorithm instanceof Algorithm.Connected)
-                connectedAlgorithms.add(algorithm);
-            else if (algorithm instanceof Algorithm.Any)
-                anyAlgorithms.add(algorithm);
-            else throw new Error("algorithm of invalid type: " + algorithm.getClass().getSimpleName());
+        ArrayList<Class<? extends Algorithm>> connectedAlgorithms
+            = new ArrayList<Class<? extends Algorithm>>();
+        ArrayList<Class<? extends Algorithm>> anyAlgorithms
+            = new ArrayList<Class<? extends Algorithm>>();
+        
+        for (Class<? extends Algorithm> algorithm : allAlgorithms) {
+            for (Class implemented : algorithm.getInterfaces()) {
+                // if interface extends Algorithm
+                if (implemented.getInterfaces()[0] == Algorithm.class) {
+                    if (implemented == Algorithm.Connected.class)
+                        connectedAlgorithms.add(algorithm);
+                    else if (implemented == Algorithm.Any.class)
+                        anyAlgorithms.add(algorithm);
+                    else throw new Error("invalid algorithm interface: " + algorithm.getSimpleName());
+                    
+                    break;
+                }
+            }
         }
         
         // print out very basic lower and upper bounds just in case
@@ -65,9 +62,6 @@ public class SuperRunner {
         if (graphs.size() == 1) {
             // if there is only one section in the graph,
             // it's connected and all algorithms can operate on it
-            
-            // convert algorithms array to ArrayList
-            ArrayList<Algorithm> allAlgorithms = new ArrayList<Algorithm>(Arrays.asList(algorithms));
             
             // create the runner
             originalGraphRunner = new OGRunner(this, originalGraph, allAlgorithms);

@@ -17,7 +17,7 @@ public class BasicExact implements Algorithm.Connected {
         }
     }
     
-    // non-recursive version
+    // non-recursive version (probably lower memory usage)
     private static boolean solvableWith(Graph graph, int numberOfColors) {
         // initialize color array to -1 (not colored)
         int[] colors = new int[graph.nodes.size()];
@@ -62,7 +62,7 @@ public class BasicExact implements Algorithm.Connected {
         }
     }
     
-    // untested recursive version
+    // untested recursive version (seems to work)
     // private static boolean solvableWith(Graph graph, int numberOfColors) {
     //     int[] colors = new int[graph.nodes.size()];
     //

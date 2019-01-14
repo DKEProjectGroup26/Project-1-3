@@ -6,16 +6,29 @@ public class Runner {
     // protected to make it accessible to extending class OGRunner
     protected final SuperRunner parent;
     private final Graph graph;
-    private final ArrayList<Algorithm> algorithms;
+    //private 
+    final ArrayList<Algorithm> algorithms;
     
     // volatile for the same reason as in SuperRunner
     public volatile int currentLowerBound = 1;
     public volatile int currentUpperBound;
     
-    public Runner(SuperRunner parent, Graph graph, ArrayList<Algorithm> algorithms) {
+    public Runner (SuperRunner parent, Graph graph, ArrayList<Class<? extends Algorithm>> algorithmClasses) {
         this.parent = parent;
         this.graph = graph;
-        this.algorithms = algorithms;
+        algorithms = new ArrayList<Algorithm>();
+        
+        for (Class<? extends Algorithm> algorithmClass : algorithmClasses) {
+            try {
+                algorithms.add(algorithmClass.getConstructor().newInstance());
+            } catch (InstantiationException e) {
+                throw new Error("class " + algorithmClass.getSimpleName() + " can't be instantiated");
+            } catch (Exception e) {
+                // for all other exceptions
+                throw new RuntimeException(e);
+            }
+        }
+        
         currentUpperBound = graph.nodes.size();
     }
     

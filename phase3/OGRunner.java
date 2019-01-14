@@ -7,7 +7,7 @@ public class OGRunner extends Runner {
     // doesn't need approval to set a new upper bound
     
     // forward constructor
-    public OGRunner(SuperRunner parent, Graph graph, ArrayList<Algorithm> algorithms) {
+    public OGRunner(SuperRunner parent, Graph graph, ArrayList<Class<? extends Algorithm>> algorithms) {
         super(parent, graph, algorithms);
     }
     

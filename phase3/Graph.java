@@ -29,11 +29,11 @@ public class Graph {
         nodes = ns;
         
         // reset indices
-        for (int i = 0; i < nodes.size(); i++)
-            nodes.get(i).index = i;
+        // for (int i = 0; i < nodes.size(); i++)
+            // nodes.get(i).index = i;
+        renumber();
         
         int nEdges = 0;
-        // stores the nodes for which all edges have been counted
         
         for (int i = 0; i < nodes.size(); i++) {
             for (Node neighbor : nodes.get(i).neighbors)
@@ -65,6 +65,12 @@ public class Graph {
         numberOfEdges = graph.numberOfEdges;
         
         checkNumbering();
+    }
+    
+    public void renumber() {
+        // fix the numbering of the nodes so that node 0 has index 0 and so on
+        for (int i = 0; i < nodes.size(); i++)
+            nodes.get(i).index = i;
     }
     
     // this is only used for checking safety
