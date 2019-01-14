@@ -29,6 +29,9 @@ public class Clique implements Algorithm.Connected, Interruptable.WithLowerBound
         ArrayList<Node> clique = new ArrayList<Node>();
         
         for (int size = startSize;; size++) {
+            // check if interrupted
+            if (!running) break;
+            
             // check if the lower bound has changed, if so, skip to match
             if (localLowerBound >= size) size = localLowerBound + 1;
             
@@ -100,8 +103,12 @@ public class Clique implements Algorithm.Connected, Interruptable.WithLowerBound
     }
     
     private ArrayList<Node> findClique(int size, ArrayList<Node> clique, ArrayList<Node> candidates) {
-        // check if interrupted or if a better lower bound was found
-        if (!running || localLowerBound >= size) return null;
+        // check if interrupted
+        if (!running) return null;
+        
+        // check if a better lower bound was found
+        // empty array list instead of null to avoid terminating the algorithm
+        if (localLowerBound >= size) return new ArrayList<Node>();
         
         mainLoop:
         for (Node node : candidates) {

@@ -2,10 +2,29 @@ package phase3;
 
 import java.util.Arrays;
 
-public class BasicExact implements Algorithm.Connected {
+public class BasicExact implements Algorithm.Connected, Interruptable.WithLowerBoundUpdates {
+    private boolean running = true;
+    private int localLowerBound;
+    
+    public void interrupt() {
+        running = false;
+    }
+    
+    public void newLowerBound(int lowerBound) {
+        if (lowerBound > localLowerBound)
+            localLowerBound = lowerBound;
+    }
+    
     public void run(Runner runner, Graph graph) {
-        int startNumberOfColors = runner.currentLowerBound;
-        for (int numberOfColors = startNumberOfColors;; numberOfColors++) {
+        localLowerBound = runner.currentLowerBound;
+        
+        for (int numberOfColors = localLowerBound;; numberOfColors++) {
+            // check if interrupted
+            if (!running) break;
+            
+            // if there's a new lower bound, skip to it
+            if (localLowerBound > numberOfColors) numberOfColors = localLowerBound;
+            
             // all numbers of colors below this have been checked and didn't work
             // so this is the new lower bound
             runner.lowerBound(numberOfColors);
@@ -17,8 +36,8 @@ public class BasicExact implements Algorithm.Connected {
         }
     }
     
-    // non-recursive version (probably lower memory usage)
-    private static boolean solvableWith(Graph graph, int numberOfColors) {
+    // non-recursive algorithm for less memory usage
+    private boolean solvableWith(Graph graph, int numberOfColors) {
         // initialize color array to -1 (not colored)
         int[] colors = new int[graph.nodes.size()];
         Arrays.fill(colors, -1);
@@ -28,6 +47,9 @@ public class BasicExact implements Algorithm.Connected {
         int index = 0;
         
         while (true) {
+            // check if interrupted of if a better lower bound was found
+            if (!running || localLowerBound > numberOfColors) return false;
+            
             // if the index is smaller than 0, the graph cannot be colored with this many colors
             if (index < 0) return false;
             
@@ -61,40 +83,4 @@ public class BasicExact implements Algorithm.Connected {
             }
         }
     }
-    
-    // untested recursive version (seems to work)
-    // private static boolean solvableWith(Graph graph, int numberOfColors) {
-    //     int[] colors = new int[graph.nodes.size()];
-    //
-    //     // initialize with -1 (no color)
-    //     Arrays.fill(colors, -1);
-    //
-    //     return solveWith(graph, numberOfColors, colors, 0);
-    // }
-    //
-    // private static boolean solveWith(Graph graph, int numberOfColors, int[] colors, int index) {
-    //     // if the index is outside the colors array, all nodes are successfully colored
-    //     if (index >= colors.length) return true;
-    //
-    //     // create a local reference to the node being colored
-    //     Node node = graph.nodes.get(index);
-    //
-    //     // try all available colors
-    //     colorLoop: for (int color = 0; color < numberOfColors; color++) {
-    //         // check if the color conflicts with any neighbors, if it does, skip
-    //         for (Node neighbor : node.neighbors)
-    //             if (colors[neighbor.index] == color) continue colorLoop;
-    //
-    //         // make a clone of the colors array
-    //         int[] newColors = Arrays.copyOf(colors, colors.length);
-    //         newColors[index] = color;
-    //
-    //         // recursive call
-    //         if (solveWith(graph, numberOfColors, newColors, index + 1)) return true;
-    //     }
-    //
-    //     // if the color loop finished without returning true,
-    //     // none of the colors can be used
-    //     return false;
-    // }
 }
