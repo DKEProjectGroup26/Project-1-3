@@ -2,7 +2,7 @@ package phase3;
 
 import java.util.ArrayList;
 
-public class Tree implements Algorithm.Connected {
+public class Tree implements Algorithm {
     public void run(Runner runner, Graph graph) {
         if (graph.nodes.size() - 1 >= graph.numberOfEdges) {
             // can only be a tree

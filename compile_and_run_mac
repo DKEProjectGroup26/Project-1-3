@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 cd phase3
 
 # echo "compiling to .class"
-javac -Xlint:unchecked $(find ./* | grep .java)
+javac $(find ./* | grep .java)
 
 # echo "compiling to .jar"
 cd ..

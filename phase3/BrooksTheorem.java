@@ -3,7 +3,7 @@ package phase3;
 import java.io.IOException;
 
 // FINISHED, NOT CHECKED
-public class BrooksTheorem implements Algorithm.Connected {
+public class BrooksTheorem implements Algorithm {
     public void run(Runner runner, Graph graph) {
         int maxNeighbors = 0;
         // check if the graph is a cycle in the same loop
