@@ -1,11 +1,12 @@
 package phase3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StephansAlgorithm implements Algorithm.Connected {
     public void run(Runner runner, Graph graph) {
         int[] colors = new int[graph.nodes.size()];
-        for (int i = 0; i < colors.length; i++) colors[i] = -1;
+        Arrays.fill(colors, -1);
         
         int maxColor = 0;
         for (int i = 0; i < colors.length; i++) {
