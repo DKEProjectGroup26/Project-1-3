@@ -1,4 +1,4 @@
-package phase3;
+package phase3.everything;
 
 public interface Interruptable {
     public void interrupt();

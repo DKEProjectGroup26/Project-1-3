@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,8 @@ public class HoffmanBound implements Algorithm.Connected {
         int[][] matrix = new int[numberOfNodes][numberOfNodes];
         
         for (Node node : graph.nodes) {
-            for (Node neighbor : node.neighbors) {
-                matrix[node.index][neighbor.index] = 1;
+            for (Node neighbor : node.getNeighbors()) {
+                matrix[node.getIndex()][neighbor.getIndex()] = 1;
             }
         }
         

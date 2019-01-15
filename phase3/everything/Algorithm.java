@@ -1,4 +1,4 @@
-package phase3;
+package phase3.everything;
 
 public interface Algorithm {
     public void run(Runner runner, Graph graph);

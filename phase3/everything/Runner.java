@@ -1,4 +1,4 @@
-package phase3;
+package phase3.everything;
 
 import java.util.ArrayList;
 

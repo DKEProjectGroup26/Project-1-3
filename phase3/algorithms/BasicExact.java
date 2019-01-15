@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.Arrays;
 
@@ -16,7 +17,7 @@ public class BasicExact implements Algorithm.Connected, Interruptable.WithLowerB
     }
     
     public void run(Runner runner, Graph graph) {
-        localLowerBound = runner.currentLowerBound;
+        localLowerBound = runner.getLowerBound();
         
         for (int numberOfColors = localLowerBound;; numberOfColors++) {
             // check if interrupted
@@ -66,8 +67,8 @@ public class BasicExact implements Algorithm.Connected, Interruptable.WithLowerB
             // try all available colors starting with the color after the current color
             colorLoop: for (int color = colors[index] + 1; color < numberOfColors; color++) {
                 // check if the color conflicts with neighboring nodes
-                for (Node neighbor : node.neighbors)
-                    if (colors[neighbor.index] == color)
+                for (Node neighbor : node.getNeighbors())
+                    if (colors[neighbor.getIndex()] == color)
                         continue colorLoop;
                 
                 // if it doesn't, color the node and continue

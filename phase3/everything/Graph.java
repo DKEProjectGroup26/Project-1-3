@@ -1,10 +1,10 @@
-package phase3;
+package phase3.everything;
 
 import java.util.ArrayList;
 
 public class Graph {
-    ArrayList<Node> nodes;
-    final int numberOfEdges;
+    public ArrayList<Node> nodes;
+    public final int numberOfEdges;
     
     public Graph(int nNodes, ArrayList<int[]> edges) {
         nodes = new ArrayList<Node>();

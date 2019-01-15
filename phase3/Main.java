@@ -1,4 +1,6 @@
 package phase3;
+import phase3.algorithms.*;
+import phase3.everything.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,11 +28,11 @@ public class Main {
                 // StephansAlgorithm.class,
                 // AdjacencyMatrix.class,
                 // BasicExact.class,
-                WelshPowell.class
+                // WelshPowell.class,
                 
                 // these are work in progress, don't use them
-                // PrunedExact.class
-                // HoffmanBound.class,
+                // PrunedExact.class,
+                // HoffmanBound.class
             )
         );
         

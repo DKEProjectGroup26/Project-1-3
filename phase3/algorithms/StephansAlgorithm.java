@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,18 +14,18 @@ public class StephansAlgorithm implements Algorithm.Connected {
             Node node = graph.nodes.get(i);
             
             ArrayList<Integer> neighborColors = new ArrayList<Integer>();
-            for (Node neighbor : node.neighbors)
-                neighborColors.add(colors[neighbor.index]);
+            for (Node neighbor : node.getNeighbors())
+                neighborColors.add(colors[neighbor.getIndex()]);
             
             // skip all colors taken by neighbors
             int newColor = 1;
             while (neighborColors.contains(newColor)) newColor++;
             
-            colors[node.index] = newColor;
+            colors[node.getIndex()] = newColor;
             if (newColor > maxColor) {
                 // if the smallest upper bound this algorithm will find
                 // is already above the current upper bound, stop checking
-                if (newColor > runner.currentUpperBound) return;
+                if (newColor > runner.getUpperBound()) return;
                 
                 maxColor = newColor;
             }

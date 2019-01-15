@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Clique implements Algorithm.Connected, Interruptable.WithLowerBound
     }
     
     public void run(Runner runner, Graph graph) {
-        localLowerBound = runner.currentLowerBound;
+        localLowerBound = runner.getLowerBound();
         
         // start from lower bound, no point checking below
         int startSize = Math.max(2, localLowerBound + 1);
@@ -55,13 +56,13 @@ public class Clique implements Algorithm.Connected, Interruptable.WithLowerBound
     
     private static boolean isViable(Node candidate, int size) {
         // if the candidate doesn't have enough neighbors, it's not viable
-        if (candidate.neighbors.size() < size - 1) return false;
+        if (candidate.getNeighbors().size() < size - 1) return false;
         
         // check if the candidate has enough neighbors with enough neighbors each
         // if not, it's not viable
         int viableNeighbors = 0;
-        for (Node neighbor : candidate.neighbors) {
-            if (neighbor.neighbors.size() >= size - 1) {
+        for (Node neighbor : candidate.getNeighbors()) {
+            if (neighbor.getNeighbors().size() >= size - 1) {
                 viableNeighbors++;
                 
                 // if target reached, stop checking
@@ -119,7 +120,7 @@ public class Clique implements Algorithm.Connected, Interruptable.WithLowerBound
             
             ArrayList<Node> newCandidates = new ArrayList<Node>(candidates);
             for (Node candidate : candidates) {
-                if (!node.neighbors.contains(candidate)) {
+                if (!node.getNeighbors().contains(candidate)) {
                     newCandidates.remove(candidate);
                     
                     // if there aren't enough candidates left to make a clique

@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,14 +26,14 @@ public class WelshPowell implements Algorithm.Connected {
             nodeLoop: for (Node node : graph.nodes) {
                 // if the node has a color, skip
                 // TODO: keep a list of uncolored nodes
-                if (colors[node.index] > 0) continue;
+                if (colors[node.getIndex()] > 0) continue;
                 
-                for (Node neighbor : node.neighbors)
-                    if (colors[neighbor.index] == color)
+                for (Node neighbor : node.getNeighbors())
+                    if (colors[neighbor.getIndex()] == color)
                         continue nodeLoop;
 
                 // the node has no neighbors with color "color", set its color
-                colors[node.index] = color;
+                colors[node.getIndex()] = color;
                 nodeColored = true;
             }
             

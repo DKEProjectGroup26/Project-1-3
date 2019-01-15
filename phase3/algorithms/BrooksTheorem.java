@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.io.IOException;
 
@@ -10,7 +11,7 @@ public class BrooksTheorem implements Algorithm.Connected {
         boolean isCycle = true;
         
         for (Node node : graph.nodes) {
-            int neighbors = node.neighbors.size();
+            int neighbors = node.getNeighbors().size();
             
             if (neighbors > maxNeighbors) maxNeighbors = neighbors;
             if (isCycle && neighbors != 2) isCycle = false; // not a cycle and stop checking

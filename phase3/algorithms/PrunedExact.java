@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 
@@ -75,7 +76,7 @@ public class PrunedExact extends BasicExact {
             ArrayList<Node> toPrune = new ArrayList<Node>();
             
             for (Node node : graph.nodes)
-                if (node.neighbors.size() <= maxConnections)
+                if (node.getNeighbors().size() <= maxConnections)
                     toPrune.add(node);
             
             // ran out of nodes to prune
@@ -92,7 +93,7 @@ public class PrunedExact extends BasicExact {
     
     private static void pruneNode(Graph graph, Node node) {
         graph.nodes.remove(node);
-        for (Node neighbor : node.neighbors)
-            neighbor.neighbors.remove(node);
+        for (Node neighbor : node.getNeighbors())
+            neighbor.getNeighbors().remove(node);
     }
 }

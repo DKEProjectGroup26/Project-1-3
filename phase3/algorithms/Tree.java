@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class Tree implements Algorithm.Connected {
         ArrayList<Node> newSeen = new ArrayList<Node>(seen);
         newSeen.add(node);
         
-        for (Node neighbor : node.neighbors) {
+        for (Node neighbor : node.getNeighbors()) {
             if (neighbor == lastNode) continue;
             if (seen.contains(neighbor)) return false;
             

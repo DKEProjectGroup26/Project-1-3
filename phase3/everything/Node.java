@@ -1,10 +1,18 @@
-package phase3;
+package phase3.everything;
 
 import java.util.ArrayList;
 
 public class Node implements Comparable {
-    int index;
-    ArrayList<Node> neighbors;
+    protected int index;
+    protected ArrayList<Node> neighbors;
+    
+    public int getIndex() {
+        return index;
+    }
+    
+    public ArrayList<Node> getNeighbors() {
+        return neighbors;
+    }
     
     public Node(int ind) {
         index = ind;
