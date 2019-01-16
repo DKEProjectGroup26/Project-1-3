@@ -4,7 +4,7 @@ import phase3.everything.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StephansAlgorithm implements Algorithm.Connected {
+public class Greedy implements Algorithm.Connected {
     public void run(Runner runner, Graph graph) {
         int[] colors = new int[graph.nodes.size()];
         Arrays.fill(colors, -1);

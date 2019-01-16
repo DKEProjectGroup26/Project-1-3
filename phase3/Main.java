@@ -9,29 +9,42 @@ import java.util.Arrays;
 // TODO: remember to check TODOs
 // TODO: there still is a problem of upper bounds going back up, check if that's ok
 // TODO: implement a global pruning and re-pruning system
+// TODO for this branch: a lot of a-b testing
 public class Main {
     public static void main(String[] args) throws IOException {
         // this is where the program starts
-
-        Graph graph = Reader.readGraph("phase3/graphs_phase1/graph20.txt");
-
+        
+        // read graph as specified in args
+        // TODO: uncomment this and remove the hard-coded graph loading
+        if (args.length < 1) throw new IllegalArgumentException("no file specified");
+        Graph graph = Reader.readGraph(args[0]); // throws IOException
+        
+        // hard-coded graph loading
+        // TODO: remove this
+        // Graph graph = Reader.readGraph("phase3/graphs_phase1/graph16.txt");
+        
         // prints out how many separate graphs there are
         // System.out.println(graphs.size() + " section in graph");
-
-        // TODO: check the ordering of the algorithms (fastest first)
-        // all usable algorithms (commas with nothing after them cause an error)
+        
+        // TODO: check the ordering of the algorithms
+        // (fastest -> slowest)
+        // (non-interruptable -> interruptable)
+        // (no updates -> with updates)
+        // all usable algorithms
         ArrayList<Class<? extends Algorithm>> algorithms = new ArrayList<Class<? extends Algorithm>>(
+            // WARNING: commas with nothing after them cause an error, remove trailing commas
             Arrays.asList(
                 // BrooksTheorem.class,
                 // Tree.class,
                 // Clique.class,
-                StephansAlgorithm.class
+                // Greedy.class,
+                // IgnoringExact.class,
                 // AdjacencyMatrix.class,
                 // BasicExact.class,
                 // WelshPowell.class,
 
                 // these are work in progress, don't use them
-                // PrunedExact.class,
+                // IgnoringExact.class,
                 // HoffmanBound.class
             )
         );

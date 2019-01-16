@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Runner {
     // protected to make it accessible to extending class OGRunner
     protected final SuperRunner parent;
-    private final Graph graph;
+    private Graph graph;
     //private 
     final ArrayList<Algorithm> algorithms;
     
