@@ -9,8 +9,9 @@ public interface Algorithm {
     /**
      * The method which every algorithm must have, this is used by {@link Runner} to call
      * the algorithm passing itself and the graph to be processed
-     * @param  runner  the object of type {@link Runner} to which the algorithm should send
-     *  new lower/upper bound messages
+     *
+     * @param  runner  the object of type {@link Runner} or {@link OGRunner} to which the algorithm should
+     *  send new lower/upper bound messages
      * @param  graph   the graph object, given by runner on which the algorithm should operate
      */
     public void run(Runner runner, Graph graph);
