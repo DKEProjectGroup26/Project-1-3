@@ -1,4 +1,5 @@
-package phase3;
+package phase3.algorithms;
+import phase3.everything.*;
 
 import java.util.ArrayList;
 
@@ -15,11 +16,11 @@ public class AdjacencyMatrix implements Algorithm.Any {
             
         // create the adjacency matrix, only one triangle
         for (Node node : graph.nodes) {
-            for (Node neighbor : node.neighbors) {
+            for (Node neighbor : node.getNeighbors()) {
                 // skip if this node has been done already
-                if (neighbor.index < node.index) continue;
+                if (neighbor.getIndex() < node.getIndex()) continue;
                 
-                matrix[node.index][neighbor.index] = 1;
+                matrix[node.getIndex()][neighbor.getIndex()] = 1;
             }
         }
         
