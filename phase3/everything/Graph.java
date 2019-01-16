@@ -2,10 +2,29 @@ package phase3.everything;
 
 import java.util.ArrayList;
 
+/**
+ * A simple data class with multiple constructors, contains an {@link ArrayList} of {@link Node}
+ * objects and remembers its number of edges
+ */
 public class Graph {
+    /**
+     * An {@link ArrayList} containing {@link Node} objects, the connections are stored by the nodes
+     */
     public ArrayList<Node> nodes;
+    
+    /**
+     * The number of edges the graph has, this is useful as edges aren't stored separately
+     */
     public final int numberOfEdges;
     
+    /**
+     * The main constructor, called by {@link Reader} when reading a graph from file,
+     * converts a number of nodes and a list of edges (stored as 2-element int arrays) to
+     * a number of edges and a list of {@link Node} objects which store the edge information
+     *
+     * @param  nNodes  the number of nodes of the graph
+     * @param  edges   the list of 2-element int arrays representing the edges of the graph
+     */
     public Graph(int nNodes, ArrayList<int[]> edges) {
         nodes = new ArrayList<Node>();
         numberOfEdges = edges.size();
@@ -21,12 +40,19 @@ public class Graph {
             node1.neighbors.add(node0);
         }
         
-        checkNumbering();
+        checkNumbering(); // TODO: remove
     }
     
-    public Graph(ArrayList<Node> ns) {
+    /**
+     * The constructor used by {@link Splitter} when splitting a graph into sections,
+     * constructs a graph from a list of nodes
+     *
+     * @param  nodes  the nodes of the section, these are renumbered and assigned to
+     *  the graph's {@link Graph#nodes} variable
+     */
+    public Graph(ArrayList<Node> nodes) {
         // this constructor is used when splitting
-        nodes = ns;
+        this.nodes = nodes;
         
         // reset indices
         // for (int i = 0; i < nodes.size(); i++)
@@ -43,9 +69,15 @@ public class Graph {
         
         numberOfEdges = nEdges;
         
-        checkNumbering();
+        checkNumbering(); // TODO: remove
     }
     
+    /**
+     * The clone constructor, this constructs a deep clone of another {@link Graph} with new
+     * {@link Node} objects leaving the input graph untouched
+     *
+     * @param  graph  the input graph, this object will not change after the clone is constructed
+     */
     public Graph(Graph graph) {
         // deep clone constructor
         ArrayList<Node> newNodes = new ArrayList<Node>();
@@ -64,9 +96,14 @@ public class Graph {
         nodes = newNodes;
         numberOfEdges = graph.numberOfEdges;
         
-        checkNumbering();
+        checkNumbering(); // TODO: remove
     }
     
+    /**
+     * A method to assign indices 0, 1, ... to the nodes, this is used when some algorithm
+     * reorganizes the nodes or when a graph is constructed from a list of nodes that are not
+     * guaranteed to be in order
+     */
     public void renumber() {
         // fix the numbering of the nodes so that node 0 has index 0 and so on
         for (int i = 0; i < nodes.size(); i++)

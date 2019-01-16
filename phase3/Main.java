@@ -7,10 +7,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 // TODO: remember to check TODOs
-// TODO: there still is a problem of upper bounds going back up, check if that's ok
-// TODO: implement a global pruning and re-pruning system
-// TODO for this branch: a lot of a-b testing
+// TODO: finish javadoc
+// TODO: there still is a problem of upper bounds going back up, check if that's ok and if it still happens
+
+/**
+ * The entry point for the entire program, contains the main method
+ */
 public class Main {
+    /**
+     * The program's main method, called when the program is run
+     * @param  args  the command line arguments, args[0] is the path to the graph
+     */
     public static void main(String[] args) throws IOException {
         // this is where the program starts
         
@@ -41,7 +48,7 @@ public class Main {
                 // IgnoringExact.class,
                 // AdjacencyMatrix.class,
                 // BasicExact.class,
-                // WelshPowell.class,
+                WelshPowell.class
 
                 // these are work in progress, don't use them
                 // IgnoringExact.class,
