@@ -2,7 +2,17 @@ package phase3.everything;
 
 import java.util.ArrayList;
 
+/**
+ * The class used to split graphs into multiple sections
+ */
 public class Splitter {
+    /**
+     * Splits a {@link Graph} object into multiple {@link Graph} objects representing unconnected
+     * sections, leaves the original objects with 0 nodes
+     *
+     * @param  graph  the graph to be split
+     * @return the list of sections of the input graph
+     */
     public static ArrayList<Graph> split(Graph graph) {
         ArrayList<Graph> sections = new ArrayList<Graph>();
         
@@ -14,6 +24,12 @@ public class Splitter {
         return sections;
     }
     
+    /**
+     * Splits off a section from a graph returning it as a list of nodes
+     *
+     * @param  graph  the graph from which to split off a section
+     * @return the section as a list of nodes
+     */
     private static ArrayList<Node> splitOff(Graph graph) {
         ArrayList<Node> nodes = new ArrayList<Node>();
         Node firstNode = graph.nodes.get(0);

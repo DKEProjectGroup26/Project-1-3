@@ -7,7 +7,17 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
-public class Reader {
+/**
+ * The class used to read graphs from file
+ */
+final public class Reader {
+    /**
+     * Reads a graph from file and converts it into a {@link Graph} object
+     *
+     * @param  filePath  the relative or full path to the file from which a graph should be read
+     * @return the {@link Graph} object extracted from the file
+     * @throws IOException if the graph couldn't be read
+     */
     public static Graph readGraph(String filePath) throws IOException {
         int nNodes = 0;
         int nEdges = 0;

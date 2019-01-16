@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class SuperRunner {
     /**
-     * A deep clone of original {@link Graph} object passed to the constructor by {@link Main#main}
+     * A deep clone of original {@link Graph} object passed to the constructor by {@link phase3.Main#main}
      */
     final Graph originalGraph;
     
