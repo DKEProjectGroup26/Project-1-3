@@ -1,6 +1,9 @@
 # mac
 .DS_Store
 
+# javadoc folder
+javadoc
+
 # Compiled class file
 *.class
 

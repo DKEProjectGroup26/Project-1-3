@@ -13,8 +13,8 @@ public interface Interruptable {
     
     /**
      * An additional interface for algorithms that accept new lower bound messages, this is used for
-     * slower lower bound algorithms such as {@link Clique} to fast-forward them to the new lower bound
-     * found by another algorithm.
+     * slower lower bound algorithms such as {@link phase3.algorithms.Clique} to fast-forward them to
+     * the new lower bound found by another algorithm.
      */
     public interface WithLowerBoundUpdates extends Interruptable {
         public void newLowerBound(int lowerBound);
@@ -28,8 +28,8 @@ public interface Interruptable {
     }
     
     /**
-     * For when an algorithm wishes to implement both {@link Interruptable#WithLowerBoundUpdates} and
-     * {@link Interruptable#WithUpperBoundUpdates}, currently unused
+     * For when an algorithm wishes to implement both {@link WithLowerBoundUpdates} and
+     * {@link WithUpperBoundUpdates}, currently unused
      */
     public interface WithBothBoundUpdates extends WithLowerBoundUpdates, WithUpperBoundUpdates {}
 }
