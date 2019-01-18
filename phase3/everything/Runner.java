@@ -166,11 +166,6 @@ public class Runner {
             currentUpperBound = newUpperBound;
             parent.upperBoundFound(newUpperBound);
             
-            // send new upper bound message to all accepting algorithms
-            for (Algorithm algorithm : algorithms)
-                if (algorithm instanceof Interruptable.WithUpperBoundUpdates)
-                    ((Interruptable.WithUpperBoundUpdates) algorithm).newUpperBound(newUpperBound);
-            
             boundCheck();
         }
     }

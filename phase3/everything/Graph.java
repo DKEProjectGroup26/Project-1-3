@@ -3,8 +3,7 @@ package phase3.everything;
 import java.util.ArrayList;
 
 /**
- * A simple data class with multiple constructors, contains an {@link ArrayList} of {@link Node}
- * objects and remembers its number of edges
+ * The internal representation of a graph, stores all vertex and edge information
  */
 public class Graph {
     /**
@@ -18,9 +17,7 @@ public class Graph {
     public final int numberOfEdges;
     
     /**
-     * The main constructor, called by {@link Reader} when reading a graph from file,
-     * converts a number of nodes and a list of edges (stored as 2-element int arrays) to
-     * a number of edges and a list of {@link Node} objects which store the edge information
+     * A constructor from number of nodes and an array of edges
      *
      * @param  nNodes  the number of nodes of the graph
      * @param  edges   the list of 2-element int arrays representing the edges of the graph
@@ -44,11 +41,9 @@ public class Graph {
     }
     
     /**
-     * The constructor used by {@link Splitter} when splitting a graph into sections,
-     * constructs a graph from a list of nodes
+     * A constructor from a list of {@link Node} objects
      *
-     * @param  nodes  the nodes of the section, these are renumbered and assigned to
-     *  the graph's {@link Graph#nodes} variable
+     * @param  nodes  the nodes of the section
      */
     public Graph(ArrayList<Node> nodes) {
         // this constructor is used when splitting
@@ -73,8 +68,7 @@ public class Graph {
     }
     
     /**
-     * The clone constructor, this constructs a deep clone of another {@link Graph} with new
-     * {@link Node} objects leaving the input graph untouched
+     * A deep clone constructor
      *
      * @param  graph  the input graph, this object will not change after the clone is constructed
      */
@@ -100,9 +94,8 @@ public class Graph {
     }
     
     /**
-     * A method to assign indices 0, 1, ... to the nodes, this is used when some algorithm
-     * reorganizes the nodes or when a graph is constructed from a list of nodes that are not
-     * guaranteed to be in order
+     * Assigns the {@link everything.Node#index} attribute to each node's index
+     * in the {@link Graph#nodes} list
      */
     public void renumber() {
         // fix the numbering of the nodes so that node 0 has index 0 and so on

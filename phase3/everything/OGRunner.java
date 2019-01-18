@@ -37,11 +37,6 @@ public class OGRunner extends Runner {
             currentUpperBound = newUpperBound;
             parent.ogUpperBoundFound(newUpperBound);
             
-            // send new upper bound message to all accepting algorithms
-            for (Algorithm algorithm : algorithms)
-                if (algorithm instanceof Interruptable.WithUpperBoundUpdates)
-                    ((Interruptable.WithUpperBoundUpdates) algorithm).newUpperBound(newUpperBound);
-            
             boundCheck();
         }
     }

@@ -1,4 +1,4 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 
-javadoc -private -d javadoc phase3/*.java phase3/*/*.java
+javadoc -d javadoc phase3/*.java phase3/*/*.java
