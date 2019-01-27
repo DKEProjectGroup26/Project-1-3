@@ -4,7 +4,13 @@ import phase3.everything.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A simple greedy algorithm used to find upper bounds
+ */
 public class Greedy implements Algorithm.Connected {
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         int[] colors = new int[graph.nodes.size()];
         Arrays.fill(colors, -1);

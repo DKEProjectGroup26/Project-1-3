@@ -3,8 +3,13 @@ import phase3.everything.*;
 
 import java.util.ArrayList;
 
-// STRANGE BEHAVIOR WITH graphs_phase1/graph06
+/**
+ * An upper bound based on adjacency matrices
+ */
 public class AdjacencyMatrix implements Algorithm.Any {
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         int numberOfNodes = graph.nodes.size();
         

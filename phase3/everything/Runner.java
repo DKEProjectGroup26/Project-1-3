@@ -13,9 +13,6 @@ public class Runner {
     // protected to make it accessible to extending class OGRunner
     protected final SuperRunner parent;
     
-    /**
-     * The section of the graph that this runner is responsible for solving
-     */
     private final Graph graph;
     
     /**
@@ -106,14 +103,14 @@ public class Runner {
     }
     
     /**
-     * Calls the {@link Interruptable#interrupt} method of all algorithms in {@link Runner#algorithms}
-     * that implement the {@link Interruptable} interface
+     * Calls the {@link Interruptible#interrupt} method of all algorithms in {@link Runner#algorithms}
+     * that implement the {@link Interruptible} interface
      */
     public void interruptAll() {
-        // interrupt all interruptable algorithms
+        // interrupt all interruptible algorithms
         for (Algorithm algorithm : algorithms)
-            if (algorithm instanceof Interruptable)
-                ((Interruptable) algorithm).interrupt();
+            if (algorithm instanceof Interruptible)
+                ((Interruptible) algorithm).interrupt();
     }
     
     /**
@@ -149,8 +146,8 @@ public class Runner {
             
             // send new lower bound message to all accepting algorithms
             for (Algorithm algorithm : algorithms)
-                if (algorithm instanceof Interruptable.WithLowerBoundUpdates)
-                    ((Interruptable.WithLowerBoundUpdates) algorithm).newLowerBound(newLowerBound);
+                if (algorithm instanceof Interruptible.WithLowerBoundUpdates)
+                    ((Interruptible.WithLowerBoundUpdates) algorithm).newLowerBound(newLowerBound);
             
             boundCheck();
         }

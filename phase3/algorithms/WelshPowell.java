@@ -4,7 +4,13 @@ import phase3.everything.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The Welsh-Powell greedy algorithm for upper bounds
+ */
 public class WelshPowell implements Algorithm.Connected {
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         // replace the graph with a deep clone to avoid messing up the original
         graph = new Graph(graph);

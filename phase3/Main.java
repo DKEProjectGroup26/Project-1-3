@@ -30,28 +30,27 @@ public class Main {
         
         // hard-coded graph loading
         // TODO: remove this
-        // Graph graph = Reader.readGraph("phase3/graphs_phase1/graph16.txt");
+        // Graph graph = Reader.readGraph("phase3/graphs_phase1/graph06.txt");
         
         // prints out how many separate graphs there are
         // System.out.println(graphs.size() + " section in graph");
         
         // TODO: check the ordering of the algorithms
-        // (fastest -> slowest)
-        // (non-interruptable -> interruptable)
-        // (no updates -> with updates)
-        // all usable algorithms
         ArrayList<Class<? extends Algorithm>> algorithms = new ArrayList<Class<? extends Algorithm>>(
             // WARNING: commas with nothing after them cause an error, remove trailing commas
             Arrays.asList(
-                // BrooksTheorem.class,
-                // Tree.class,
-                // Clique.class
-                // Greedy.class,
-                // IgnoringExact.class,
-                // AdjacencyMatrix.class,
-                // BasicExact.class,
-                // WelshPowell.class
-                // BronKerbosch.class
+                BrooksTheorem.class,
+                Tree.class,
+                Bipartite.class,
+                WelshPowell.class,
+                Clique.class,
+                BronKerbosch.class,
+                Greedy.class,
+                AdjacencyMatrix.class,
+                Exact.class
+                
+                // BetterExact.class
+                // SectionsUpper.class /* gives same upper bounds as AdjacencyMatrix */
 
                 // these are work in progress, don't use them
                 // IgnoringExact.class,

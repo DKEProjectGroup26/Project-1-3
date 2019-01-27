@@ -3,7 +3,7 @@ package phase3.everything;
 /**
  * The interface to be implemented by any algorithm that can be interrupted
  */
-public interface Interruptable {
+public interface Interruptible {
     /**
      * This method should be overridden by algorithms implementing their own stopping functionality
      */
@@ -12,7 +12,7 @@ public interface Interruptable {
     /**
      * An additional interface for algorithms that accept lower bound updates
      */
-    public interface WithLowerBoundUpdates extends Interruptable {
+    public interface WithLowerBoundUpdates extends Interruptible {
         public void newLowerBound(int lowerBound);
     }
 }

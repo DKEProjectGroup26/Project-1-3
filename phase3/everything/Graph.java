@@ -12,7 +12,7 @@ public class Graph {
     public ArrayList<Node> nodes;
     
     /**
-     * The number of edges the graph has, this is useful as edges aren't stored separately
+     * The number of edges the graph has
      */
     public final int numberOfEdges;
     
@@ -36,8 +36,6 @@ public class Graph {
             node0.neighbors.add(node1);
             node1.neighbors.add(node0);
         }
-        
-        checkNumbering(); // TODO: remove
     }
     
     /**
@@ -63,8 +61,6 @@ public class Graph {
         }
         
         numberOfEdges = nEdges;
-        
-        checkNumbering(); // TODO: remove
     }
     
     /**
@@ -89,28 +85,15 @@ public class Graph {
         
         nodes = newNodes;
         numberOfEdges = graph.numberOfEdges;
-        
-        checkNumbering(); // TODO: remove
     }
     
     /**
-     * Assigns the {@link everything.Node#index} attribute to each node's index
+     * Assigns the {@link Node#index} attribute to each node's index
      * in the {@link Graph#nodes} list
      */
     public void renumber() {
         // fix the numbering of the nodes so that node 0 has index 0 and so on
         for (int i = 0; i < nodes.size(); i++)
             nodes.get(i).index = i;
-    }
-    
-    // this is only used for checking safety
-    // throws an error if the nodes are not in the correct order
-    // this is critical for many algorithms to work so only remove this after
-    // thorough testing of final code
-    // TODO: thoroughly test the final code and remove this
-    public void checkNumbering() {
-        for (int i = 0; i < nodes.size(); i++)
-            if (nodes.get(i).index != i)
-                throw new Error("node index mismatch (" + nodes.get(i).index + " at index " + i + ")");
     }
 }

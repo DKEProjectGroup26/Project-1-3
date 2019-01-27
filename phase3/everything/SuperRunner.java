@@ -64,10 +64,6 @@ public class SuperRunner {
         originalGraph = new Graph(inputGraph);
         graphs = Splitter.split(inputGraph);
         
-        // this is just for safety, if a graph's nodes are not in order, it will throw an error
-        originalGraph.checkNumbering();
-        for (Graph graph : graphs) graph.checkNumbering();
-        
         // divide algorithms into the ones taking only connected graphs and the ones taking any graph
         ArrayList<Class<? extends Algorithm>> connectedAlgorithms
             = new ArrayList<Class<? extends Algorithm>>();
@@ -84,6 +80,10 @@ public class SuperRunner {
                 + " doesn't implement either Algorithm.Connected or Algorithm.Any"
             );
         }
+        
+        // any are connected too
+        for (Class<? extends Algorithm> anyAlgorithm : anyAlgorithms)
+            connectedAlgorithms.add(anyAlgorithm);
         
         // print out very basic lower and upper bounds just in case
         System.out.println("NEW BEST LOWER BOUND = 1");
@@ -124,10 +124,6 @@ public class SuperRunner {
         originalGraphRunner.start();
     }
     
-    /**
-     * Checks if the lower and upper bounds have converged to the same value, if they have, calls
-     * the {@link SuperRunner#chromaticNumberFound} method
-     */
     private void boundCheck() {
         if (globalLowerBound == globalUpperBound)
             chromaticNumberFound(globalLowerBound);
@@ -209,21 +205,15 @@ public class SuperRunner {
         System.out.println("NEW BEST UPPER BOUND = " + newOGUpperBound);
         globalUpperBound = newOGUpperBound;
         imposeOGUpperBound();
+        
+        boundCheck();
     }
     
-    /**
-     * Sets the lower bounds of all runners to the current value of {@link SuperRunner#globalLowerBound}
-     * using the {@link Runner#lowerBound} method
-     */
     private void imposeLowerBound() {
         for (Runner runner : runners)
             runner.lowerBound(globalLowerBound);
     }
     
-    /**
-     * Sets the upper bounds of all runners to the current value of {@link SuperRunner#globalUpperBound}
-     * using the {@link Runner#upperBound} method
-     */
     private void imposeOGUpperBound() {
         // this method is only called by ogUpperBoundFound
         for (Runner runner : runners)
@@ -236,7 +226,6 @@ public class SuperRunner {
      *
      * @param  chromaticNumber  the chromatic number that was found
      */
-    // TODO: test this
     private void chromaticNumberFound(int chromaticNumber) {
         if (chromaticNumber > globalLowerBound) lowerBoundFound(chromaticNumber);
         if (chromaticNumber < globalUpperBound) upperBoundFound(chromaticNumber);

@@ -1,13 +1,14 @@
 PHASE_1 = true
 PHASE_3 = true
-TIMEOUT = 20 # seconds
+TIMEOUT = 120 # seconds (test conditions: 120)
 
 def general title, folder
   puts title
   puts "name       CN |  LB ->  UB"
   
   table = (1..20).map do |i|
-    # 20s each
+    print "Graph #{i.to_s.rjust 2}: "
+    
     log = `gtimeout #{TIMEOUT} java -Xms1024m -Xmx1024m -jar Group26.jar phase3/#{folder}/graph#{i.to_s.rjust(2, ?0)}.txt`
 
     cn = log[/CHROMATIC NUMBER = \d+/]
@@ -18,11 +19,16 @@ def general title, folder
     
     if cn
       cn.slice! 'CHROMATIC NUMBER = '
+      cn = cn&.to_i
     else
       lo, hi = maxLb, minUb
     end
     
-    print "Graph #{i.to_s.rjust 2}: "
+    if lo and lo == hi
+      cn = lo
+      lo = nil
+    end
+    
     print (cn&.to_s || ' ').rjust(3) + ' | '
     print "#{lo.to_s.rjust 3} -> #{hi.to_s.rjust 3}" if lo
     puts

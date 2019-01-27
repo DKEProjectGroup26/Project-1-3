@@ -8,10 +8,7 @@ import java.util.ArrayList;
  */
 public class Node implements Comparable {
     /**
-     * The index of the node inside its parent graph, this needs to be kept up-to-date, eliminates
-     * the time that would be needed to look up a node in a large graph just to find its index.
-     * Protected so that a {@link Graph} object can renumber its nodes without creating copies
-     * but algorithms can't inadvertently mess up node indices (alorithms can call {@link Graph#renumber})
+     * The index of the node inside its parent graph's {@link Graph#nodes} list
      */
     protected int index;
     
@@ -21,21 +18,21 @@ public class Node implements Comparable {
     protected ArrayList<Node> neighbors;
     
     /**
-     * @return the node's {@link Node#index}
+     * @return {@link Node#index}
      */
     public int getIndex() {
         return index;
     }
     
     /**
-     * @return the node's {@link Node#neighbors}
+     * @return {@link Node#neighbors}
      */
     public ArrayList<Node> getNeighbors() {
         return neighbors;
     }
     
     /**
-     * The main constructor
+     * Constructor
      *
      * @param  index  the index to be assigned to this node
      */
@@ -48,8 +45,7 @@ public class Node implements Comparable {
      * {@link Node}'s implementation of the {@link Comparable} interface, compares nodes by index
      *
      * @param  other  another object of type {@link Node} which this node will be compared to
-     * @return -1, 0, or 1 depending on whether the node's index is less than, equal to, or greater than
-     *  the other node's index, respectively
+     * @return -1, 0, or 1
      */
     public int compareTo(Object other) {
         // -1 if my index < other index

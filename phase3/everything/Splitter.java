@@ -24,12 +24,6 @@ public class Splitter {
         return sections;
     }
     
-    /**
-     * Splits off a section from a graph returning it as a list of nodes
-     *
-     * @param  graph  the graph from which to split off a section
-     * @return the section as a list of nodes
-     */
     private static ArrayList<Node> splitOff(Graph graph) {
         ArrayList<Node> nodes = new ArrayList<Node>();
         Node firstNode = graph.nodes.get(0);

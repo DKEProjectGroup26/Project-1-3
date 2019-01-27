@@ -3,19 +3,32 @@ import phase3.everything.*;
 
 import java.util.ArrayList;
 
-public class Clique implements Algorithm.Connected, Interruptable.WithLowerBoundUpdates {
+/**
+ * A custom clique finding algorithm, finds cliques of increasing size
+ */
+public class Clique implements Algorithm.Connected, Interruptible.WithLowerBoundUpdates {
     private boolean running = true;
     private int localLowerBound;
     
+    /**
+     * Implementation of {@link Interruptible}, stops execution
+     */
     public void interrupt() {
         running = false;
     }
     
+    /**
+     * Implementation of {@link Interruptible.WithLowerBoundUpdates}, skips
+     * execution to the new best lower bound
+     */
     public void newLowerBound(int lowerBound) {
         if (lowerBound > localLowerBound)
             localLowerBound = lowerBound;
     }
     
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         localLowerBound = runner.getLowerBound();
         

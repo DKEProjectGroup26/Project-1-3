@@ -3,7 +3,13 @@ import phase3.everything.*;
 
 import java.util.ArrayList;
 
+/**
+ * The Bren-Kerbosch algorithm used to find cliques
+ */
 public class BronKerbosch implements Algorithm.Connected {
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         getMaximals(runner, new ArrayList<Node>(), new ArrayList<Node>(graph.nodes), new ArrayList<Node>());
     }

@@ -3,7 +3,13 @@ import phase3.everything.*;
 
 import java.util.ArrayList;
 
+/**
+ * A light algorithm use to check if the given graph is a tree
+ */
 public class Tree implements Algorithm.Connected {
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         if (graph.nodes.size() - 1 >= graph.numberOfEdges) {
             // can only be a tree

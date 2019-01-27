@@ -9,8 +9,8 @@ public interface Algorithm {
     /**
      * Used to pass a graph to an algorithm
      *
-     * @param runner 
-     * @param graph
+     * @param runner the parent {@link Runner} object
+     * @param graph the {@link Graph} object to be processed
      */
     public void run(Runner runner, Graph graph);
     

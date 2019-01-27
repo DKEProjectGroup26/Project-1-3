@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class OGRunner extends Runner {
     // OGRunner works with the original, intact graph and, therefore
-    // doesn't need approval to set a new upper bound
+    // can enforce its upper bound on all other runners
     
     /**
      * Calls the superclass constructor

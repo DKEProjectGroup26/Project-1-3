@@ -3,8 +3,13 @@ import phase3.everything.*;
 
 import java.io.IOException;
 
-// FINISHED, NOT CHECKED
+/**
+ * A very light algorithm used to find a basic upper bound based on the highest-degree node in a graph
+ */
 public class BrooksTheorem implements Algorithm.Connected {
+    /**
+     * Implementation of {@link Algorithm}, runs the algorithm on a given graph
+     */
     public void run(Runner runner, Graph graph) {
         int maxNeighbors = 0;
         // check if the graph is a cycle in the same loop
